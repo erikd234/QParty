@@ -1,0 +1,34 @@
+.page-top {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.main-header {
+  font-size: 5rem;
+  margin: 20px;
+}
+
+.search-container {
+  margin: 20px;
+}
+
+.card-container {
+  margin: 20px;
+}
+
+.speaker-panel {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-panel {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.panel-row {
+  display: flex;
+  justify-content: space-evenly;
+}

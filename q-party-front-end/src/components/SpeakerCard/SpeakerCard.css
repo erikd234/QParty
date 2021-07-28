@@ -1,0 +1,12 @@
+.speaker-checkbox {
+  transform: scale(1.5);
+}
+
+.speaker-name {
+  display: inline;
+  font-size: 1.5rem;
+}
+
+.state-info {
+  display: inline;
+}
