@@ -22,17 +22,7 @@ export const setRoutes = (app: any, io: any) => {
   app.get("/addspeaker/:roomname", SpeakerRequest.addSpeakerToPlayGroupRequest);
   app.get("/removespeaker/:roomname", SpeakerRequest.removeSpeakerFromPlayGroupRequest);
   app.post("/sonoswebhookevent", (req: Request, res: Response) => {
-    const eventType = req.body.type;
-    if (eventType !== "transport-state") return res.send(200);
-
-    const stateData = req.body.data;
-    const currentSong: Song = {
-      trackArtist: stateData.state.currentTrack.artist,
-      trackName: stateData.state.currentTrack.title,
-      trackUri: stateData.state.currentTrack.artist,
-    };
-    console.log(currentSong);
-    io.emit("state change", currentSong);
+    SpeakerRequest.onSonosWebHookEventRequest(req, res, io);
   });
   app.get("/currentsong", SpeakerRequest.getCurrentSongRequest);
 };

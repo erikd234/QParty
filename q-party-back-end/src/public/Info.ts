@@ -50,6 +50,13 @@ const User = {
 };
 
 const Application = {
+  prevSong: null as any,
+  getPrevSong: function () {
+    return this.prevSong;
+  },
+  setPrevSong: function (song: Song) {
+    this.prevSong = song;
+  },
   songQueue: {
     _queue: [] as Song[],
     getQueue: function () {
@@ -59,7 +66,7 @@ const Application = {
       this._queue.push(song);
     },
     getNext: function () {
-      return this._queue.shift();
+      return this._queue.shift() as Song;
     },
     removeById: function (songUri: string) {
       this._queue = this._queue.filter((song) => {

@@ -8,6 +8,18 @@ import Song, { QueueElement } from "../types/Song";
 export default class SpeakerService {
   static baseUrl: string = "http://localhost:5005";
 
+  static async playSongOnSpeakers(uri: any) {
+    // returns false if no group memebers
+    const validRoomName = SpeakerService.getValidPlayMember();
+    if (!validRoomName) return { data: "no speakers selected" };
+
+    const url = this.baseUrl + `/${validRoomName}/spotify/now/${uri}`;
+    const options: AxiosRequestConfig = {
+      url: url,
+    };
+    return await axios(options);
+  }
+
   /**
    * sets the global variable for available devices in Info.User.availableSpeakers as an array of objects for return
    * and returns the available devices
@@ -179,6 +191,21 @@ export default class SpeakerService {
       trackName: response.data.currentTrack.title,
       trackUri: response.data.currentTrack.artist,
     };
+  }
+  /**
+   * Clears the built in sonos queue that causes issues with the queue I am creating
+   */
+  static async clearPlayGroupBuiltInQueue() {
+    let groupSpeaker = this.getValidPlayMember();
+    if (!groupSpeaker) {
+      // now I want to clean every speakers queue eventually for now just group speaker
+      groupSpeaker = "kitchen"; //TODO change this to iterate through all speakers queue;
+    }
+    const options = {
+      url: `http://localhost:5005/${groupSpeaker}/clearqueue`,
+    };
+    const response = await axios(options); //TODO add error handling
+    console.log("clear queue returned" + response.data);
   }
 }
 /**
