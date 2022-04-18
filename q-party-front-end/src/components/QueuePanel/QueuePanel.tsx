@@ -13,7 +13,7 @@ function QueuePanel() {
       if (!songQueue) return;
       setSongQueue(songQueue);
     });
-  }, []);
+  }, [socket]);
   return (
     <div>
       <h1>Song Queue</h1>
