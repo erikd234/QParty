@@ -7,7 +7,7 @@ export default function CurrentSongPanel() {
   let [currentSong, setCurrentSong] = useState({} as Song);
   useEffect(() => {
     const options = {
-      url: "localhost:8888/currentsong",
+      url: "http://localhost:8888/currentsong",
     };
     axios(options).then((response) => {
       let song: Song = response.data;

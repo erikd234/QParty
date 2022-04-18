@@ -1,6 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { info } from "console";
 import { Request, Response } from "express";
+import Info from "../public/Info";
 import SpeakerService from "../service/SpeakerService";
+import Song from "../types/Song";
 
 export default class SpeakerRequest {
   static baseUrl: string = "http://localhost:5005";
@@ -10,26 +13,10 @@ export default class SpeakerRequest {
     res.json(data);
   }
 
-  static playSongRequest(req: Request, res: Response) {
+  static async playSongRequest(req: Request, res: Response) {
     let uri = req.params.uri;
-
-    // returns false if no group memebers
-    const validRoomName = SpeakerService.getValidPlayMember();
-    if (!validRoomName) {
-      res.json({ message: "no speakers selected" });
-      return;
-    }
-    const url = SpeakerRequest.baseUrl + `/${validRoomName}/spotify/now/${uri}`;
-    const options: AxiosRequestConfig = {
-      url: url,
-    };
-    axios(options)
-      .then(function (response) {
-        res.json(response);
-      })
-      .catch(function (err) {
-        res.json(err);
-      });
+    const response = await SpeakerService.playSongOnSpeakers(uri);
+    res.json(response.data);
   }
   static async addSpeakerToPlayGroupRequest(req: Request, res: Response) {
     const roomName = req.params.roomname;
